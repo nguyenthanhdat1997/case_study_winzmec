@@ -17,8 +17,6 @@ import static constant.Constants.*;
 public class UserService {
     private static final Scanner scanner;
     protected static final List<User> users;
-    private static int userId = 1;
-
 
 
     static {
@@ -89,10 +87,10 @@ public class UserService {
         } else if (user instanceof Staff) {
             StaffService staffService = new StaffService();
             System.out.println("staff");
+            //dậy làm phần này cho ngày chủ nhật
             //sửa password, check lịch khám, chỉnh sửa bệnh án, tìm thông tin bệnh nhân
         } else if (user instanceof Admin) {
-            AdminService adminService = new AdminService();
-            System.out.println("admin");
+            AdminService.menuAdmin();
             //thêm xóa chỉnh sửa thông tin tất cả(cần gì sửa đó)
         }
 
@@ -137,6 +135,7 @@ public class UserService {
     }
 
     public static int setId() {
+        int userId = 1;
         for (User user : users) {
             userId++;
         }
@@ -144,11 +143,22 @@ public class UserService {
     }
 
     public static void setPropertyStaff(User user) {
-        System.out.println("Input salary");
-        long salary = Long.parseLong(scanner.nextLine());
-        ((Staff) user).setSalary(salary);
+        ((Staff) user).setSalary(setSalary(user));
         choosePosition(user);
         chooseDepartment(user);
+    }
+
+    public static long setSalary(User user) {
+        long salary = 7000000;
+        if (user instanceof Staff) {
+            if (((Staff) user).getPosition().equals(GET_STAFF_POSITION_DOCTOR)) {
+                salary *= 3;
+            } else if (((Staff) user).getPosition().equals(GET_STAFF_POSITION_NURSE)) {
+                salary *= 2;
+            } else if (((Staff) user).getPosition().equals(GET_STAFF_POSITION_SECURITY)) {
+            }
+        }
+        return salary;
     }
 
     public static void setPropertyCustomer(User user) {
@@ -166,13 +176,13 @@ public class UserService {
         scanner.nextLine();
         switch (inputPosition) {
             case DOCTOR:
-                ((Staff) user).setPosition(String.valueOf(EPosition.DOCTOR));
+                ((Staff) user).setPosition(GET_STAFF_POSITION_DOCTOR);
                 break;
             case NURSE:
-                ((Staff) user).setPosition(String.valueOf(EPosition.NURSE));
+                ((Staff) user).setPosition(GET_STAFF_POSITION_NURSE);
                 break;
             case SECURITY:
-                ((Staff) user).setPosition(String.valueOf(EPosition.SECURITY));
+                ((Staff) user).setPosition(GET_STAFF_POSITION_SECURITY);
                 break;
         }
     }
@@ -186,27 +196,19 @@ public class UserService {
         scanner.nextLine();
         switch (inputDepartment) {
             case SURGERY:
-                ((Staff) user).setDepartment(String.valueOf(EDepartment.SURGERY));
+                ((Staff) user).setDepartment(GET_STAFF_DEPARTMENT_SURGERY);
                 break;
             case DERMATOLOGY:
-                ((Staff) user).setDepartment(String.valueOf(EDepartment.DERMATOLOGY));
+                ((Staff) user).setDepartment(GET_STAFF_DEPARTMENT_DERMATOLOGY);
                 break;
             case CARDIOLOGY:
-                ((Staff) user).setDepartment(String.valueOf(EDepartment.CARDIOLOGY));
+                ((Staff) user).setDepartment(GET_STAFF_DEPARTMENT_CARDIOLOGY);
                 break;
         }
     }
 
-//    public static void checkTypeUser(User user) {
-//        if (user instanceof Staff) {
-//            setPropertyStaff(user);
-//        } else if (user instanceof Customer) {
-//            setPropertyCustomer(user);
-//        } else if (user instanceof Admin) {
-//            System.out.println("welcome Admin");
-//        }
-//    }
-    public static void inputInfoSharedUser(User user){
+
+    public static void inputInfoSharedUser(User user) {
         System.out.println("Input username:");
         String username = scanner.nextLine();
 
@@ -229,7 +231,6 @@ public class UserService {
         System.out.println("Input address");
         String address = scanner.nextLine();
 
-
         user.setUsername(username);
         user.setPassword(password);
         user.setName(name);
@@ -238,11 +239,13 @@ public class UserService {
         user.setCccd(cccd);
         user.setAddress(address);
     }
-    public static void createAllUser(){
+
+    public static void createAllUser() {
         CustomerService.createCustomer();
         StaffService.createStaff();
         AdminService.createAdmin();
     }
+
     public static void print() {
         for (User user : users) {
             System.out.println(user);

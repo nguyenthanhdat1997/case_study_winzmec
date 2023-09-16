@@ -21,11 +21,14 @@ public class StaffService {
     }
 
     public static void createStaff() {
-        User user = new Staff(setId(), "dat", "dat", "dat", 12, "nu", "234786", "23k", 20000, EPosition.SECURITY.toString(), EDepartment.CARDIOLOGY.toString());
-        User user1 = new Staff(setId(), "dat", "dat", "dat", 12, "nam", "234786", "23k", 20000, EPosition.NURSE.toString(), EDepartment.SURGERY.toString());
+        User user = new Staff(setId(), "dat", "dat", "dat", 12, "nu", "234786", "23k", 20000, GET_STAFF_POSITION_DOCTOR, GET_STAFF_DEPARTMENT_DERMATOLOGY);
         users.add(user);
+        User user1 = new Staff(setId(), "su", "su", "su", 55, "nam", "234786", "23k", 20000, GET_STAFF_POSITION_NURSE, GET_STAFF_DEPARTMENT_CARDIOLOGY);
         users.add(user1);
+        User user2 = new Staff(setId(), "nhan", "nhan", "nhan", 44, "nam", "234786", "23k", 20000, GET_STAFF_POSITION_SECURITY, GET_STAFF_DEPARTMENT_SURGERY);
+        users.add(user2);
     }
+
 
     public static void searchAndShowInfoStaff() {
         System.out.println("Bạn muốn tìm thông tin của nhân viên ở vị trí nào" + "\n" +
@@ -38,13 +41,13 @@ public class StaffService {
             if (user instanceof Staff) {
                 switch (inputAnswerStaff) {
                     case DOCTOR:
-                        checkListDoctor(user);
+                        checkListDoctor((Staff) user);
                         break;
                     case NURSE:
-                        checkListNurse(user);
+                        checkListNurse((Staff) user);
                         break;
                     case SECURITY:
-                        checkListSecurity(user);
+                        checkListSecurity((Staff) user);
                         break;
                 }
             }
@@ -52,26 +55,21 @@ public class StaffService {
     }
 
 
-    public static void checkListDoctor(User user) {
-        if (user instanceof Staff) {
-            if (((Staff) user).getPosition().equals(EPosition.DOCTOR.toString())) {
-                System.out.println(user);
-            }
+    public static void checkListDoctor(Staff user) {
+        if (user.getPosition().equals(GET_STAFF_POSITION_DOCTOR)) {
+            System.out.println(user);
         }
     }
-    public static void checkListNurse(User user) {
-        if (user instanceof Staff) {
 
-            if (((Staff) user).getPosition().equals(EPosition.NURSE.toString())) {
-                System.out.println(user);
-            }
+    public static void checkListNurse(Staff user) {
+        if (user.getPosition().equals(GET_STAFF_POSITION_NURSE)) {
+            System.out.println(user);
         }
     }
-    public static void checkListSecurity(User user) {
-        if (user instanceof Staff) {
-            if (((Staff) user).getPosition().equals(EPosition.SECURITY.toString())) {
-                System.out.println(user);
-            }
+
+    public static void checkListSecurity(Staff user) {
+        if (user.getPosition().equals(GET_STAFF_POSITION_SECURITY)) {
+            System.out.println(user);
         }
     }
 
@@ -86,38 +84,35 @@ public class StaffService {
             if (user instanceof Staff) {
                 switch (inputAnswerDepartment) {
                     case SURGERY:
-                        checkListSurgery(user);
+                        checkListSurgery((Staff) user);
                         break;
                     case DERMATOLOGY:
-                        checkLisDermatology(user);
+                        checkLisDermatology((Staff) user);
                         break;
                     case CARDIOLOGY:
-                        checkListCardiology(user);
+                        checkListCardiology((Staff) user);
                         break;
                 }
             }
         }
 
     }
-    public static void checkListSurgery(User user) {
-        if (user instanceof Staff) {
-            if (((Staff) user).getDepartment().equals(EDepartment.SURGERY.toString())) {
-                System.out.println(user);
-            }
+
+    public static void checkListSurgery(Staff user) {
+        if (user.getDepartment().equals(EDepartment.SURGERY.toString())) {
+            System.out.println(user);
         }
     }
-    public static void checkLisDermatology(User user) {
-        if (user instanceof Staff) {
-            if (((Staff) user).getDepartment().equals(EDepartment.DERMATOLOGY.toString())) {
-                System.out.println(user);
-            }
+
+    public static void checkLisDermatology(Staff user) {
+        if (user.getDepartment().equals(EDepartment.DERMATOLOGY.toString())) {
+            System.out.println(user);
         }
     }
-    public static void checkListCardiology(User user) {
-        if (user instanceof Staff) {
-            if (((Staff) user).getDepartment().equals(EDepartment.CARDIOLOGY.toString())) {
-                System.out.println(user);
-            }
+
+    public static void checkListCardiology(Staff user) {
+        if (user.getDepartment().equals(EDepartment.CARDIOLOGY.toString())) {
+            System.out.println(user);
         }
     }
 }

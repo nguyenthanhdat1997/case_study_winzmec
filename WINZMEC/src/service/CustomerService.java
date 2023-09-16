@@ -20,6 +20,8 @@ public class CustomerService {
     public static void createCustomer() {
         User user = new Customer(setId(), "dev", "dev", "dat", 23, "Nam", "329847", "21k", "gan");
         users.add(user);
+        User user1 = new Customer(setId(), "dev1", "dev1", "phuc", 20, "Nam", "25342", "21kk", "tim");
+        users.add(user1);
     }
 
     public static void menuCustomer(User user) {
