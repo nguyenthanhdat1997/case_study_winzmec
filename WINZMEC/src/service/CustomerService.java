@@ -1,54 +1,61 @@
 package service;
 
+import constant.EPosition;
 import entity.Customer;
+import entity.Staff;
 import entity.User;
 
 import java.util.Scanner;
 
-import static service.UserService.users;
+import static constant.Constants.*;
+import static service.UserService.*;
 
 public class CustomerService {
     private static final Scanner scanner;
+
     static {
         scanner = new Scanner(System.in);
     }
+
     public static void createCustomer() {
-        User user = new Customer(1, "dev", "dev", "dat", 23, "Nam", "329847", "21k", "gan");
+        User user = new Customer(setId(), "dev", "dev", "dat", 23, "Nam", "329847", "21k", "gan");
         users.add(user);
+    }
+
+    public static void menuCustomer(User user) {
+        System.out.println("Chào mừng bạn đến với WINZMEC: " + "\n" +
+                "1. Chỉnh sửa thông tin " + "\n" +
+                "2. Đặt lịch khám " + "\n" +
+                "3. Tìm thông tin các bác sĩ " + "\n" +
+                "4. Tìm thông tin các khoa ");
+        int inputAnswer = scanner.nextInt();
+        scanner.nextLine();
+        switch (inputAnswer) {
+            case UPDATE_INFO_CUSTOMER:
+                updateInfo(user);
+                break;
+            case SCHEDULE_AN_APPOINTMENT:
+//                scheduleAnAppointMent();
+                break;
+            case SEARCH_AND_SHOW_INFO_STAFF:
+                StaffService.searchAndShowInfoStaff();
+                break;
+            case SEARCH_INFO_AND_SHOW_INFO_DEPARTMENT:
+                StaffService.searchAndShowInfoDepartment();
+                break;
+        }
     }
 
     public static void registerCustomer() {
         User user = new Customer();
-        System.out.println("Input username:");
-        String username = scanner.nextLine();
-
-        System.out.println("Input password:");
-        String password = scanner.nextLine();
-
-        System.out.println("Input name:");
-        String name = scanner.nextLine();
-
-        System.out.println("Input age:");
-        int age = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.println("Input sex:");
-        String sex = scanner.nextLine();
-
-        System.out.println("Input CCCD:");
-        String cccd = scanner.nextLine();
-
-        System.out.println("Input address");
-        String address = scanner.nextLine();
-
-        user.setUserId(UserService.setId());
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setName(name);
-        user.setAge(age);
-        user.setSex(sex);
-        user.setCccd(cccd);
-        user.setAddress(address);
+        inputInfoSharedUser(user);
         users.add(user);
     }
+
+    public static void updateInfo(User user) {
+        System.out.println("Nhập thông tin bạn muốn sửa");
+        inputInfoSharedUser(user);
+    }
+
+
 }

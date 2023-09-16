@@ -17,7 +17,9 @@ import static constant.Constants.*;
 public class UserService {
     private static final Scanner scanner;
     protected static final List<User> users;
-    private static int userId = 0;
+    private static int userId = 1;
+
+
 
     static {
         scanner = new Scanner(System.in);
@@ -30,15 +32,18 @@ public class UserService {
                 "1. Đăng nhập" + "\n" +
                 "2. Đăng ký" + "\n" +
                 "3. In ra danh sách user");
-        String inputAnswer = scanner.nextLine();
+        int inputAnswer = scanner.nextInt();
+        scanner.nextLine();
         switch (inputAnswer) {
-            case "1":
+            case LOGIN:
                 login();
                 break;
-            case "2":
+            case REGISTER_CUSTOMER:
                 CustomerService.registerCustomer();
+                System.out.println("Bạn đã đăng ký thành công ");
+                login();
                 break;
-            case "3":
+            case PRINT_LIST_USER:
                 print();
                 break;
         }
@@ -58,15 +63,16 @@ public class UserService {
             System.out.println("Username chưa tồn tại");
             menu();
         } else {
-            checkPasswordOfUser(username,password);
+            checkPasswordOfUser(username, password);
         }
     }
-    public static void checkPasswordOfUser(String username, String password){
+
+    public static void checkPasswordOfUser(String username, String password) {
         for (User user : users) {
             if (user.getUsername().equals(username) &&
                     user.getPassword().equals(password)) {
                 System.out.println("Welcome " + username);
-                checkTypeUser(user);
+                checkLoginTypeUser(user);
                 break;
             } else if (user.getUsername().equals(username) &&
                     !user.getPassword().equals(password)) {
@@ -75,19 +81,21 @@ public class UserService {
             }
         }
     }
-    public static void checkTypeUser(User user){
-        if (user != null) {
-            if (user instanceof Customer) {
-                CustomerService customerService = new CustomerService();
-                System.out.println("customer");
-            } else if (user instanceof Staff) {
-                StaffService staffService = new StaffService();
-                System.out.println("staff");
-            } else if (user instanceof Admin) {
-                AdminService adminService = new AdminService();
-                System.out.println("admin");
-            }
+
+    public static void checkLoginTypeUser(User user) {
+        if (user instanceof Customer) {
+            CustomerService.menuCustomer(user);
+            //chỉnh sửa thông tin User, đặt lịch khám, tìm thông tin bác sĩ, tìm thông tin các khoa
+        } else if (user instanceof Staff) {
+            StaffService staffService = new StaffService();
+            System.out.println("staff");
+            //sửa password, check lịch khám, chỉnh sửa bệnh án, tìm thông tin bệnh nhân
+        } else if (user instanceof Admin) {
+            AdminService adminService = new AdminService();
+            System.out.println("admin");
+            //thêm xóa chỉnh sửa thông tin tất cả(cần gì sửa đó)
         }
+
     }
 
     //search: tên doctor, nurse, tên bệnh nhân
@@ -122,38 +130,9 @@ public class UserService {
 
     public static User inputInfoUser(int userType) {
         User user = createUser(userType);
-//        System.out.println("Input username:");
-//        String username = scanner.nextLine();
-//
-//        System.out.println("Input password:");
-//        String password = scanner.nextLine();
-
-        System.out.println("Input name:");
-        String name = scanner.nextLine();
-
-        System.out.println("Input age:");
-        int age = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.println("Input sex:");
-        String sex = scanner.nextLine();
-
-        System.out.println("Input CCCD:");
-        String cccd = scanner.nextLine();
-
-        System.out.println("Input address");
-        String address = scanner.nextLine();
-
         assert user != null;
-        user.setUserId(setId());
-//        user.setUsername(username);
-//        user.setPassword(password);
-        user.setName(name);
-        user.setAge(age);
-        user.setSex(sex);
-        user.setCccd(cccd);
-        user.setAddress(address);
-        checkTypeUser(user);
+        inputInfoSharedUser(user);
+//        checkTypeUser(user);
         return user;
     }
 
@@ -180,36 +159,20 @@ public class UserService {
 
     public static void choosePosition(User user) {
         System.out.println("Choose position" + "\n" +
-                "1. DIRECTOR,\n" +
-                "2. DEPUTY,\n" +
-                "3. SECURITY,\n" +
-                "4. DOCTOR,\n" +
-                "5. NURSE,\n" +
-                "6. ADVISER,\n" +
-                "7. CLEANER");
+                "1. DOCTOR,\n" +
+                "2. NURSE,\n" +
+                "3. SECURITY ");
         int inputPosition = scanner.nextInt();
         scanner.nextLine();
         switch (inputPosition) {
-            case DIRECTOR:
-                ((Staff) user).setPosition(String.valueOf(EPosition.DIRECTOR));
-                break;
-            case DEPUTY:
-                ((Staff) user).setPosition(String.valueOf(EPosition.DEPUTY));
-                break;
-            case SECURITY:
-                ((Staff) user).setPosition(String.valueOf(EPosition.SECURITY));
-                break;
             case DOCTOR:
                 ((Staff) user).setPosition(String.valueOf(EPosition.DOCTOR));
                 break;
             case NURSE:
                 ((Staff) user).setPosition(String.valueOf(EPosition.NURSE));
                 break;
-            case ADVISER:
-                ((Staff) user).setPosition(String.valueOf(EPosition.ADVISER));
-                break;
-            case CLEANER:
-                ((Staff) user).setPosition(String.valueOf(EPosition.CLEANER));
+            case SECURITY:
+                ((Staff) user).setPosition(String.valueOf(EPosition.SECURITY));
                 break;
         }
     }
@@ -243,7 +206,43 @@ public class UserService {
 //            System.out.println("welcome Admin");
 //        }
 //    }
+    public static void inputInfoSharedUser(User user){
+        System.out.println("Input username:");
+        String username = scanner.nextLine();
 
+        System.out.println("Input password:");
+        String password = scanner.nextLine();
+
+        System.out.println("Input name:");
+        String name = scanner.nextLine();
+
+        System.out.println("Input age:");
+        int age = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("Input sex:");
+        String sex = scanner.nextLine();
+
+        System.out.println("Input CCCD:");
+        String cccd = scanner.nextLine();
+
+        System.out.println("Input address");
+        String address = scanner.nextLine();
+
+
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setName(name);
+        user.setAge(age);
+        user.setSex(sex);
+        user.setCccd(cccd);
+        user.setAddress(address);
+    }
+    public static void createAllUser(){
+        CustomerService.createCustomer();
+        StaffService.createStaff();
+        AdminService.createAdmin();
+    }
     public static void print() {
         for (User user : users) {
             System.out.println(user);
