@@ -1,19 +1,19 @@
-package service;
+package service.impl;
 
-import constant.EPosition;
 import entity.Admin;
 import entity.Customer;
 import entity.Staff;
 import entity.User;
+import service.UserService;
 
 import java.util.Scanner;
 
 import static constant.Constants.*;
 import static service.UserService.*;
-import static service.CustomerService.*;
+import static service.impl.CustomerService.*;
 
 public class AdminService {
-    private static Scanner scanner;
+    private static final Scanner scanner;
 
     static {
         scanner = new Scanner(System.in);
@@ -110,12 +110,4 @@ public class AdminService {
         }
         return null;
     }
-
-//    public static void printUserCustomer() {
-//        for (User user : users) {
-//            if (user instanceof Customer) {
-//                System.out.println(user);
-//            }
-//        }
-//    }
 }

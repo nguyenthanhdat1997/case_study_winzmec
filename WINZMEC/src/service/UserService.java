@@ -1,11 +1,13 @@
 package service;
 
-import constant.EDepartment;
-import constant.EPosition;
+
 import entity.Admin;
 import entity.User;
 import entity.Customer;
 import entity.Staff;
+import service.impl.AdminService;
+import service.impl.CustomerService;
+import service.impl.StaffService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ import static constant.Constants.*;
 
 public class UserService {
     private static final Scanner scanner;
-    protected static final List<User> users;
+    public static final List<User> users;
 
 
     static {
@@ -30,6 +32,7 @@ public class UserService {
                 "1. Đăng nhập" + "\n" +
                 "2. Đăng ký" + "\n" +
                 "3. In ra danh sách user");
+        createAllUser();
         int inputAnswer = scanner.nextInt();
         scanner.nextLine();
         switch (inputAnswer) {
@@ -85,8 +88,7 @@ public class UserService {
             CustomerService.menuCustomer(user);
             //chỉnh sửa thông tin User, đặt lịch khám, tìm thông tin bác sĩ, tìm thông tin các khoa
         } else if (user instanceof Staff) {
-            StaffService staffService = new StaffService();
-            System.out.println("staff");
+            StaffService.searchAndShowInfoCustomer();
             //dậy làm phần này cho ngày chủ nhật
             //sửa password, check lịch khám, chỉnh sửa bệnh án, tìm thông tin bệnh nhân
         } else if (user instanceof Admin) {
@@ -156,6 +158,7 @@ public class UserService {
             } else if (((Staff) user).getPosition().equals(GET_STAFF_POSITION_NURSE)) {
                 salary *= 2;
             } else if (((Staff) user).getPosition().equals(GET_STAFF_POSITION_SECURITY)) {
+                salary *= 1;
             }
         }
         return salary;

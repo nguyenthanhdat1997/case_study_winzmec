@@ -1,8 +1,6 @@
-package service;
+package service.impl;
 
-import constant.EPosition;
 import entity.Customer;
-import entity.Staff;
 import entity.User;
 
 import java.util.Scanner;
@@ -11,6 +9,9 @@ import static constant.Constants.*;
 import static service.UserService.*;
 
 public class CustomerService {
+
+
+
     private static final Scanner scanner;
 
     static {
@@ -28,7 +29,7 @@ public class CustomerService {
         System.out.println("Chào mừng bạn đến với WINZMEC: " + "\n" +
                 "1. Chỉnh sửa thông tin " + "\n" +
                 "2. Đặt lịch khám " + "\n" +
-                "3. Tìm thông tin các bác sĩ " + "\n" +
+                "3. Tìm thông tin các vị trí trong bệnh viện " + "\n" +
                 "4. Tìm thông tin các khoa ");
         int inputAnswer = scanner.nextInt();
         scanner.nextLine();
@@ -58,6 +59,8 @@ public class CustomerService {
         System.out.println("Nhập thông tin bạn muốn sửa");
         inputInfoSharedUser(user);
     }
+    public static void createAppointment(Customer customer){
 
+    }
 
 }
