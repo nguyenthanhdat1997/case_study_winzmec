@@ -1,5 +1,5 @@
 package service;
 
 public interface IFind {
-    public void find(String find);
+    void find(String find);
 }

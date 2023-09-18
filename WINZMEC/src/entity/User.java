@@ -1,6 +1,8 @@
 package entity;
 
-public abstract class User {
+import java.io.Serializable;
+
+public abstract class User implements Serializable {
     protected int userId;
     protected String username;
     protected String password;
@@ -100,6 +102,45 @@ public abstract class User {
                 ", cccd='" + cccd + '\'' +
                 ", address='" + address + '\'' +
                 '}';
+    }
+    public User userId(int userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public User username(String username) {
+        this.username = username;
+        return this;
+    }
+
+    public User password(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public User name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public User age(int age) {
+        this.age = age;
+        return this;
+    }
+
+    public User sex(String sex) {
+        this.sex = sex;
+        return this;
+    }
+
+    public User cccd(String cccd) {
+        this.cccd = cccd;
+        return this;
+    }
+
+    public User address(String address) {
+        this.address = address;
+        return this;
     }
 
 }

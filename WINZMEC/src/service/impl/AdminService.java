@@ -4,15 +4,15 @@ import entity.Admin;
 import entity.Customer;
 import entity.Staff;
 import entity.User;
-import service.UserService;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
 import static constant.Constants.*;
-import static service.UserService.*;
+import static service.impl.UserService.*;
 import static service.impl.CustomerService.*;
 
-public class AdminService {
+public class AdminService implements Serializable {
     private static final Scanner scanner;
 
     static {
@@ -20,8 +20,8 @@ public class AdminService {
     }
 
     public static void createAdmin() {
-        User user = new Admin(setId(), "admin", "admin", "thinh", 33, "Nu", "652341", "21k");
-        users.add(user);
+        User user= Admin.getAdmin();
+        getUsers().add(user);
     }
 
     public static void menuAdmin() {
@@ -48,7 +48,7 @@ public class AdminService {
                 "3. Security");
         int inputAnswer = scanner.nextInt();
         scanner.nextLine();
-        for (User user : users) {
+        for (User user : getUsers()) {
             if (user instanceof Staff) {
                 switch (inputAnswer) {
                     case DOCTOR:
@@ -101,7 +101,7 @@ public class AdminService {
     }
 
     public static User findInfoCustomerByUsername(String username) {
-        for (User user : users) {
+        for (User user : getUsers()) {
             if (user instanceof Customer) {
                 if (user.getUsername().equals(username)){
                     return user;

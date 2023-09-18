@@ -3,14 +3,13 @@ package service.impl;
 import entity.Customer;
 import entity.User;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
 import static constant.Constants.*;
-import static service.UserService.*;
+import static service.impl.UserService.*;
 
-public class CustomerService {
-
-
+public class CustomerService implements Serializable {
 
     private static final Scanner scanner;
 
@@ -20,9 +19,9 @@ public class CustomerService {
 
     public static void createCustomer() {
         User user = new Customer(setId(), "dev", "dev", "dat", 23, "Nam", "329847", "21k", "gan");
-        users.add(user);
+        getUsers().add(user);
         User user1 = new Customer(setId(), "dev1", "dev1", "phuc", 20, "Nam", "25342", "21kk", "tim");
-        users.add(user1);
+        getUsers().add(user1);
     }
 
     public static void menuCustomer(User user) {
@@ -38,7 +37,7 @@ public class CustomerService {
                 updateInfo(user);
                 break;
             case SCHEDULE_AN_APPOINTMENT:
-//                scheduleAnAppointMent();
+                AppointmentService.createAppointment((Customer) user);
                 break;
             case SEARCH_AND_SHOW_INFO_STAFF:
                 StaffService.searchAndShowInfoStaff();
@@ -52,15 +51,11 @@ public class CustomerService {
     public static void registerCustomer() {
         User user = new Customer();
         inputInfoSharedUser(user);
-        users.add(user);
+        getUsers().add(user);
     }
 
     public static void updateInfo(User user) {
         System.out.println("Nhập thông tin bạn muốn sửa");
         inputInfoSharedUser(user);
     }
-    public static void createAppointment(Customer customer){
-
-    }
-
 }

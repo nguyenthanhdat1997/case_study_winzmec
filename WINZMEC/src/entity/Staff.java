@@ -2,7 +2,9 @@ package entity;
 
 import entity.User;
 
-public class Staff extends User {
+import java.io.Serializable;
+
+public class Staff extends User implements Serializable {
 
     private long salary;
     private String position;
@@ -58,4 +60,59 @@ public class Staff extends User {
                 ", department='" + department + '\'' +
                 '}';
     }
+    public Staff userId(int userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public Staff username(String username) {
+        this.username = username;
+        return this;
+    }
+
+    public Staff password(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public Staff name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public Staff age(int age) {
+        this.age = age;
+        return this;
+    }
+
+    public Staff sex(String sex) {
+        this.sex = sex;
+        return this;
+    }
+
+    public Staff cccd(String cccd) {
+        this.cccd = cccd;
+        return this;
+    }
+
+    public Staff address(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public Staff salary(long salary) {
+        this.salary = salary;
+        return this;
+    }
+
+    public Staff position(String position) {
+        this.position = position;
+        return this;
+    }
+
+    public Staff department(String department) {
+        this.department = department;
+        return this;
+    }
+
 }

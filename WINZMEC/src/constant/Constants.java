@@ -52,4 +52,15 @@ public interface Constants {
     int FIND_DERMATOLOGY_IN_DEPARTMENT = 5;
     int FIND_CARDIOLOGY_IN_DEPARTMENT = 6;
 
+    int BRANCH_1 = 1;
+    int BRANCH_2 = 2;
+    int BRANCH_3 = 3;
+
+    int DAT = 1;
+    int PHUC = 2;
+    int KIET = 3;
+
+    int BOOKING_1 = 1;
+    int BOOKING_2 = 2;
+    int BOOKING_3 = 3;
 }

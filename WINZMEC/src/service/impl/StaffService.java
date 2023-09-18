@@ -5,14 +5,14 @@ import entity.User;
 import factory.*;
 import service.IFind;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
 import static constant.Constants.*;
-import static service.UserService.setId;
-import static service.UserService.users;
+import static service.impl.UserService.*;
 
 
-public class StaffService {
+public class StaffService implements Serializable {
     private IFind findCustomer;
 
     public StaffService(IFind findCustomer) {
@@ -26,12 +26,47 @@ public class StaffService {
     }
 
     public static void createStaff() {
-        User user = new Staff(setId(), "dat", "dat", "dat", 12, "nu", "234786", "23k", 20000, GET_STAFF_POSITION_DOCTOR, GET_STAFF_DEPARTMENT_DERMATOLOGY);
-        users.add(user);
-        User user1 = new Staff(setId(), "su", "su", "su", 55, "nam", "234786", "23k", 20000, GET_STAFF_POSITION_NURSE, GET_STAFF_DEPARTMENT_CARDIOLOGY);
-        users.add(user1);
-        User user2 = new Staff(setId(), "nhan", "nhan", "nhan", 44, "nam", "234786", "23k", 20000, GET_STAFF_POSITION_SECURITY, GET_STAFF_DEPARTMENT_SURGERY);
-        users.add(user2);
+        User user = new Staff()
+                .userId(setId())
+                .username("dat")
+                .password("dat")
+                .name("dat")
+                .age(12)
+                .sex("nu")
+                .cccd("234786")
+                .address("23k")
+                .salary(20000)
+                .position(GET_STAFF_POSITION_DOCTOR)
+                .department(GET_STAFF_DEPARTMENT_DERMATOLOGY);
+        getUsers().add(user);
+
+        User user1 = new Staff()
+                .userId(setId())
+                .username("su")
+                .password("su")
+                .name("su")
+                .age(55)
+                .sex("nam")
+                .cccd("234786")
+                .address("23k")
+                .salary(20000)
+                .position(GET_STAFF_POSITION_NURSE)
+                .department(GET_STAFF_DEPARTMENT_CARDIOLOGY);
+        getUsers().add(user1);
+
+        User user2 = new Staff()
+                .userId(setId())
+                .username("nhan")
+                .password("nhan")
+                .name("nhan")
+                .age(54)
+                .sex("nu")
+                .cccd("783265")
+                .address("23k2")
+                .salary(50000)
+                .position(GET_STAFF_POSITION_NURSE)
+                .department(GET_STAFF_DEPARTMENT_CARDIOLOGY);
+        getUsers().add(user2);
     }
 
 
@@ -70,7 +105,7 @@ public class StaffService {
                 "3. CARDIOLOGY ");
         int inputAnswerDepartment = scanner.nextInt();
         scanner.nextLine();
-        IFind iFind = null;
+        IFind iFind;
         switch (inputAnswerDepartment) {
             case SURGERY:
                 iFind = findStaffFactory.createIFind(FIND_SURGERY_IN_DEPARTMENT);
@@ -98,7 +133,7 @@ public class StaffService {
         int inputAnswerCustomer = scanner.nextInt();
         scanner.nextLine();
 
-        IFind iFind = null;
+        IFind iFind;
         switch (inputAnswerCustomer) {
             case SEARCH_NAME_CUSTOMER:
                 iFind = findCustomerFactory.createIFind(SEARCH_NAME_CUSTOMER);

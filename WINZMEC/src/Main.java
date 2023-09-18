@@ -1,11 +1,8 @@
-import service.UserService;
+import service.impl.UserService;
 
 public class Main {
     public static void main(String[] args) {
 
-
-//        StaffService.searchAndShowInfoStaff();
         UserService.menu();
-//        UserService.print();
     }
 }
