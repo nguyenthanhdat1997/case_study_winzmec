@@ -4,7 +4,7 @@ package service.impl;
 import entity.*;
 
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,8 +14,8 @@ import static constant.Constants.*;
 
 public class UserService implements Serializable {
     private static final Scanner scanner;
-
-    private static final List<User> users;
+    private static final File FILE_USER;
+    private static List<User> users;
 
     public static List<User> getUsers() {
         return users;
@@ -24,9 +24,11 @@ public class UserService implements Serializable {
     static {
         scanner = new Scanner(System.in);
         users = new ArrayList<>();
+        FILE_USER = new File("src/file/file_user.txt");
     }
 
     public static void menu() {
+        UserService.saveFileCustomer();
         System.out.println("Chào mừng bạn đến với hệ thống WINZMEC" + "\n" +
                 "Bạn muốn làm gì? " + "\n" +
                 "1. Đăng nhập" + "\n" +
@@ -88,15 +90,11 @@ public class UserService implements Serializable {
             CustomerService.menuCustomer(user);
         } else if (user instanceof Staff) {
             StaffService.searchAndShowInfoCustomer();
-            //sửa password, check lịch khám, chỉnh sửa bệnh án, tìm thông tin bệnh nhân
         } else if (user instanceof Admin) {
             AdminService.menuAdmin();
-            //thêm xóa chỉnh sửa thông tin tất cả(cần gì sửa đó)
         }
-
     }
 
-    //search: tên doctor, nurse, tên bệnh nhân
     public static User createUser(int flag) {
         User newUser;
         switch (flag) {
@@ -115,8 +113,7 @@ public class UserService implements Serializable {
     public static void register() {
         System.out.println("Input type user:" + "\n" +
                 "1: CUSTOMER" + "\n" +
-                "2: STAFF" + "\n" +
-                "3: ADMIN");
+                "2: STAFF");
         int userType = scanner.nextInt();
         scanner.nextLine();
 
@@ -237,14 +234,40 @@ public class UserService implements Serializable {
     }
 
     public static void createAllUser() {
-        CustomerService.createCustomer();
+//        CustomerService.createCustomer();
         StaffService.createStaff();
         AdminService.createAdmin();
+
     }
 
     public static void print() {
         for (User user : users) {
             System.out.println(user);
+        }
+    }
+
+    public static void saveFileCustomer() {
+        try {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(FILE_USER));
+            objectOutputStream.writeObject(users);
+            objectOutputStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void loadData() throws RuntimeException {
+        if (FILE_USER.length() != 0) {
+            try {
+                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(FILE_USER));
+                users = (List<User>) objectInputStream.readObject();
+                objectInputStream.close();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

@@ -3,7 +3,7 @@ package service.impl;
 import entity.Customer;
 import entity.User;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.Scanner;
 
 import static constant.Constants.*;
@@ -18,9 +18,27 @@ public class CustomerService implements Serializable {
     }
 
     public static void createCustomer() {
-        User user = new Customer(setId(), "dev", "dev", "dat", 23, "Nam", "329847", "21k", "gan");
+        User user = new Customer()
+                .userId(setId())
+                .username("dev")
+                .password("dev")
+                .name("dat")
+                .age(23)
+                .sex("Nam")
+                .cccd("329847")
+                .address("21k")
+                .health_record("gan");
         getUsers().add(user);
-        User user1 = new Customer(setId(), "dev1", "dev1", "phuc", 20, "Nam", "25342", "21kk", "tim");
+        User user1 = new Customer()
+                .userId(setId())
+                .username("dev1")
+                .password("dev1")
+                .name("phuc")
+                .age(20)
+                .sex("Nam")
+                .cccd("25342")
+                .address("21kk")
+                .health_record("tim");
         getUsers().add(user1);
     }
 
@@ -52,10 +70,14 @@ public class CustomerService implements Serializable {
         User user = new Customer();
         inputInfoSharedUser(user);
         getUsers().add(user);
+
+
     }
 
     public static void updateInfo(User user) {
         System.out.println("Nhập thông tin bạn muốn sửa");
         inputInfoSharedUser(user);
     }
+
+
 }

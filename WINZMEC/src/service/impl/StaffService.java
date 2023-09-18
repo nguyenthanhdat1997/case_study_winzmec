@@ -5,6 +5,7 @@ import entity.User;
 import factory.*;
 import service.IFind;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Scanner;
 
@@ -14,6 +15,7 @@ import static service.impl.UserService.*;
 
 public class StaffService implements Serializable {
     private IFind findCustomer;
+    private static File FILE_CUSTOMER;
 
     public StaffService(IFind findCustomer) {
         this.findCustomer = findCustomer;
@@ -23,6 +25,7 @@ public class StaffService implements Serializable {
 
     static {
         scanner = new Scanner(System.in);
+        FILE_CUSTOMER = new File("src/file_user.txt");
     }
 
     public static void createStaff() {
